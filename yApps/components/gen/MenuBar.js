@@ -1,7 +1,13 @@
+import {
+  WalletModalProvider,
+  WalletMultiButton,
+} from "@solana/wallet-adapter-react-ui";
 import { Menu } from "semantic-ui-react";
-import GetWallet from "../../web3/GetWallet.js";
+import { useWallet } from "@solana/wallet-adapter-react";
 
-const MenuBar = () => {
+const MenuBar = (props) => {
+  const wallet = useWallet();
+
   return (
     <Menu size="large">
       <Menu.Item>
@@ -9,9 +15,10 @@ const MenuBar = () => {
       </Menu.Item>
 
       <Menu.Menu position="right">
-        <Menu.Item>
-          <GetWallet />
-        </Menu.Item>
+        <WalletModalProvider>
+          <WalletMultiButton />
+        </WalletModalProvider>
+        {!wallet.publicKey && "ok"}
       </Menu.Menu>
     </Menu>
   );
